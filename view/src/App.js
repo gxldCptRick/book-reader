@@ -1,25 +1,48 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { BrowserRouter, Route } from "react-router-dom";
+import { initializeIOC } from "./data/ioc";
+import "./App.css";
+import HomePage from "./components/pages/homepage";
+const routes = [
+  {
+    name: "All Books",
+    url: "/all/books",
+    component: HomePage,
+  },
+  {
+    name: "My Books",
+    url: "/my/books",
+    component: HomePage,
+  },
+  {
+    name: "My History",
+    url: "/my/history",
+    component: HomePage,
+  },
+];
 
+const Wrapper = ({ component: Component, ...rest }) => {
+  return (props) => <Component {...props} {...rest} />;
+};
+const ioc = initializeIOC();
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      {routes.map(({ url, name, component }) => (
+        <React.Fragment key={name}>
+          <Route
+            path={url}
+            exact
+            component={Wrapper({ component, navElements: routes, ioc })}
+          />
+        </React.Fragment>
+      ))}
+      <Route
+        path="/"
+        exact
+        component={Wrapper({ component: HomePage, navElements: routes, ioc })}
+      />
+    </BrowserRouter>
   );
 }
 
