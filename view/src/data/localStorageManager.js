@@ -33,4 +33,10 @@ export default class LocalStorageManager {
       }
     });
   }
+
+  addResource(key, singleValue) {
+    return this.get(key, []).then((arr) =>
+      this.set(key, [...arr, singleValue])
+    );
+  }
 }

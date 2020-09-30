@@ -4,6 +4,8 @@ import BookComponent from "../bookcard";
 import { DATA_PROVIDERS } from "../../data/iocConstants";
 import "./homepage.css";
 
+const bookKey = "books";
+
 export default class HomePageComponent extends Component {
   constructor(props, context) {
     super(props, context);
@@ -16,7 +18,7 @@ export default class HomePageComponent extends Component {
     let { ioc, managerName = DATA_PROVIDERS.SESSION_MANAGER } = this.props;
     let sessionManager = ioc.get(managerName);
     sessionManager
-      .get("books", [])
+      .get(bookKey, [])
       .then((books) => {
         this.setState({ books });
         console.log("Loading books into state");
@@ -26,6 +28,13 @@ export default class HomePageComponent extends Component {
         console.error(err);
       });
   }
+
+  updateHistory = (book) => {
+    const { ioc } = this.state;
+    const history = ioc.get(DATA_PROVIDERS.HISTORY_MANAGER);
+    history.addResource(bookKey, book);
+  };
+
   _renderPage() {
     let { books, input } = this.state;
     input = input.toLowerCase();
@@ -33,7 +42,12 @@ export default class HomePageComponent extends Component {
       (books.length > 1 &&
         books
           .filter(({ name }) => name.toLowerCase().includes(input))
-          .map((b) => <BookComponent {...b}></BookComponent>)) || (
+          .map((b) => (
+            <BookComponent
+              onSelected={this.updateHistory}
+              {...b}
+            ></BookComponent>
+          ))) || (
         <p className="banner">
           There are currently no books
           {(input && ` that contain : "${input}"`) || input}
