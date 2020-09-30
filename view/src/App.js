@@ -8,32 +8,35 @@ const routes = [
     name: "All Books",
     url: "/all/books",
     component: HomePage,
+    props: { managerName: "externalManager" },
   },
   {
     name: "My Books",
     url: "/my/books",
     component: HomePage,
+    props: { managerName: "sessionManager" },
   },
   {
     name: "My History",
     url: "/my/history",
     component: HomePage,
+    props: { managerName: "historyManager" },
   },
 ];
 
-const Wrapper = ({ component: Component, ...rest }) => {
-  return (props) => <Component {...props} {...rest} />;
+const Wrapper = ({ component: Component, props: outerProps, ...rest }) => {
+  return (props) => <Component {...props} {...rest} {...outerProps} />;
 };
 const ioc = initializeIOC();
 function App() {
   return (
     <BrowserRouter>
-      {routes.map(({ url, name, component }) => (
+      {routes.map(({ url, name, component, props = {} }) => (
         <React.Fragment key={name}>
           <Route
             path={url}
             exact
-            component={Wrapper({ component, navElements: routes, ioc })}
+            component={Wrapper({ component, navElements: routes, ioc, props })}
           />
         </React.Fragment>
       ))}

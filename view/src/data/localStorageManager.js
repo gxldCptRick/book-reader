@@ -1,8 +1,16 @@
 export default class LocalStorageManager {
+  constructor(namespace = "") {
+    this.namespace = namespace;
+  }
+
+  _normalizeKey(key) {
+    return `${this.namespace}_${key}`;
+  }
+
   get(key, defaultValue) {
     return new Promise((res, rej) => {
       try {
-        let storedItem = localStorage.getItem(key);
+        let storedItem = localStorage.getItem(this._normalizeKey(key));
         if (storedItem) {
           res(JSON.parse(storedItem));
         } else {
@@ -18,7 +26,7 @@ export default class LocalStorageManager {
     return new Promise((res, rej) => {
       try {
         let storing = JSON.stringify(value);
-        localStorage.setItem(key, storing);
+        localStorage.setItem(this._normalizeKey(key), storing);
         res();
       } catch (err) {
         rej(err);

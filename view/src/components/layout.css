@@ -1,0 +1,37 @@
+header {
+  display: flex;
+}
+a.title-link {
+  text-decoration: none;
+  padding: 0 3%;
+}
+
+a.title-link:hover {
+  background-color: yellow;
+}
+
+nav {
+  flex: 2;
+  padding-top: 3%;
+  background: yellow;
+}
+
+.nav-list {
+  background: orange;
+  display: flex;
+}
+
+.nav-list li {
+  list-style-type: none;
+  flex: 1;
+}
+
+.nav-list__item {
+  padding: 5%;
+  background-color: white;
+  text-decoration: none;
+}
+
+.nav-list__item:hover {
+  background-color: yellow;
+}

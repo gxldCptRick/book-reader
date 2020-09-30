@@ -1,0 +1,22 @@
+.banner {
+  width: 50%;
+  margin: 4% auto;
+  font-weight: bold;
+  text-align: center;
+  background: orange;
+  padding: 3%;
+  border: solid 10px yellow;
+}
+
+.search-box {
+  background-color: orange;
+  border: solid 10px yellow;
+  width: 50%;
+  margin: 3% auto 0 auto;
+}
+
+.search-box__input {
+  margin: 1%;
+  width: 96%;
+  font-size: 1em;
+}

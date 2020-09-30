@@ -1,4 +1,6 @@
 import LocalStorageManager from "./localStorageManager";
+import HttpManager from "./httpManager";
+
 class InversionOfControlContainer {
   registerItem(key = "", value) {
     if (value === undefined || value === null) {
@@ -16,5 +18,7 @@ class InversionOfControlContainer {
 export const initializeIOC = () => {
   const container = new InversionOfControlContainer();
   container.registerItem("sessionManager", new LocalStorageManager());
+  container.registerItem("externalManager", new HttpManager());
+  container.registerItem("historyManager", new LocalStorageManager("history"));
   return container;
 };
