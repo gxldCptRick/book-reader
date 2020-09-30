@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Layout from "../layout";
 import BookComponent from "../bookcard";
+import { DATA_PROVIDERS } from "../../data/iocConstants";
 import "./homepage.css";
 
 export default class HomePageComponent extends Component {
@@ -12,7 +13,7 @@ export default class HomePageComponent extends Component {
     };
   }
   componentDidMount() {
-    let { ioc, managerName = "sessionManager" } = this.props;
+    let { ioc, managerName = DATA_PROVIDERS.SESSION_MANAGER } = this.props;
     let sessionManager = ioc.get(managerName);
     sessionManager
       .get("books", [])
