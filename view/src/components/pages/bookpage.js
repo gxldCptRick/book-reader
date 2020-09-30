@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import FileReader from "../fileReader";
 import Layout from "../layout";
 
 import "./bookpage.css";
@@ -22,6 +23,7 @@ export default class BookPageComponent extends Component {
             <p className="book-card__description">{description}</p>
           </div>
         </div>
+        <FileReader fileUrl={url} />
       </Layout>
     );
   }

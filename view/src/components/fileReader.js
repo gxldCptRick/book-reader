@@ -16,7 +16,7 @@ class ChainBuilder {
   constructor() {
     this.links = [];
   }
-  addLink(link) {
+  addLink(link = FileChainer) {
     this.links.push(link);
   }
   build() {
