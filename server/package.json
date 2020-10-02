@@ -1,0 +1,7 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "server to scower file system to find book information about what is stored",
+  "main": "index.js",
+  "license": "MIT"
+}
