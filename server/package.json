@@ -1,7 +1,25 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "description": "server to scower file system to find book information about what is stored",
+  "description": "server to scour the file system to find book information about what is stored",
   "main": "index.js",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "koa": "^2.13.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.11.6",
+    "@babel/node": "^7.10.5",
+    "@babel/preset-env": "^7.11.5",
+    "eslint": "^7.10.0",
+    "eslint-config-prettier": "^6.12.0",
+    "nodemon": "^2.0.4",
+    "prettier": "^2.1.2"
+  },
+  "scripts": {
+    "start": "yarn lint && yarn babel-start",
+    "nodemon": "nodemon -w src --exec yarn start",
+    "babel-start": "babel-node ./src/index.js",
+    "lint": "eslint src"
+  }
 }
