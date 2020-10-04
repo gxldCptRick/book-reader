@@ -20,6 +20,7 @@ export default class HomePageComponent extends Component {
     sessionManager
       .get(bookKey, [])
       .then((books) => {
+        books.push(...this._mockData());
         this.setState({ books });
         console.log("Loading books into state");
       })
@@ -27,6 +28,20 @@ export default class HomePageComponent extends Component {
         this.setState({ errorMessage: err.message });
         console.error(err);
       });
+  }
+
+  _mockData() {
+    let theArray = [];
+    for (let i = 0; i < 3; i++) {
+      theArray.push({ 
+        name: `Super cool book ${i}`,
+        coverSource: "https://via.placeholder.com/150",
+        tags: ["C#", "Java", "React"],
+        description: "This is going to be the best book your will ever read! Recommend by the Andres Hermilo Carrera Reynaga A.K.A MILO!!!!!"
+       })
+    }
+
+    return theArray;
   }
 
   updateHistory = (book) => {
@@ -39,17 +54,20 @@ export default class HomePageComponent extends Component {
     let { books, input } = this.state;
     input = input.toLowerCase();
     return (
-      (books.length > 1 &&
+      (books.length > 0 && <div className="book-container">{
         books
           .filter(({ name }) => name.toLowerCase().includes(input))
           .map((b) => (
             <BookComponent onSelected={this.updateHistory} {...b} />
-          ))) || (
+          ))
+      }</div>) || (
         <p className="banner">
           There are currently no books
           {(input && ` that contain : "${input}"`) || input}
         </p>
       )
+
+
     );
   }
 
