@@ -1,6 +1,7 @@
 import LocalStorageManager from "./localStorageManager";
 import HttpManager from "./httpManager";
 import { DATA_PROVIDERS } from "./iocConstants";
+import Config from "../config.json";
 
 class InversionOfControlContainer {
   registerItem(key = "", value) {
@@ -22,7 +23,10 @@ export const initializeIOC = () => {
     DATA_PROVIDERS.SESSION_MANAGER,
     new LocalStorageManager()
   );
-  container.registerItem(DATA_PROVIDERS.EXTERNAL_MANAGER, new HttpManager());
+  container.registerItem(
+    DATA_PROVIDERS.EXTERNAL_MANAGER,
+    new HttpManager(Config.BASE_URI)
+  );
   container.registerItem(
     DATA_PROVIDERS.HISTORY_MANAGER,
     new LocalStorageManager("history")

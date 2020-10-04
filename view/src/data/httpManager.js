@@ -1,6 +1,6 @@
 export default class HttpManager {
-  constructor() {
-    this.basePath = "/api/";
+  constructor(basePath = "") {
+    this.basePath = basePath + "/api/";
   }
 
   get(key) {

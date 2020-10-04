@@ -24,7 +24,7 @@ export default class HomePageComponent extends Component {
         console.log("Loading books into state");
       })
       .catch((err) => {
-        this.setState({ errorMessage: err });
+        this.setState({ errorMessage: err.message });
         console.error(err);
       });
   }
