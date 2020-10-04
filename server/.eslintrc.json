@@ -8,6 +8,7 @@
     "ecmaVersion": 12,
     "sourceType": "module"
   },
+  "ignorePatterns": ["out/*", "node_modules/*"],
   "rules": {
     "indent": ["error", 2],
     "linebreak-style": ["error", "windows"],

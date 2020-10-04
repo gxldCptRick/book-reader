@@ -43,10 +43,7 @@ export default class HomePageComponent extends Component {
         books
           .filter(({ name }) => name.toLowerCase().includes(input))
           .map((b) => (
-            <BookComponent
-              onSelected={this.updateHistory}
-              {...b}
-            ></BookComponent>
+            <BookComponent onSelected={this.updateHistory} {...b} />
           ))) || (
         <p className="banner">
           There are currently no books
