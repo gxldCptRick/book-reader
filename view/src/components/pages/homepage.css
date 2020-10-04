@@ -20,3 +20,53 @@
   width: 96%;
   font-size: 1em;
 }
+
+.book-container {
+  width: 95%;
+  margin: 4% auto;
+  display: flex;
+  flex-wrap: wrap;
+  flex-flow: row wrap;
+}
+
+.book-container__item {
+  width: 48%; 
+  display: flex;
+  margin: 10px;
+  border: black solid;
+  box-sizing: border-box;
+}
+
+.book-container__item__image {
+  margin: 5px;
+}
+
+.book-container__item__info {
+  margin-right: 10px;
+}
+
+.book-container__item__info__title {
+  text-align: right;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+
+.book-container__item__info__tag-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  margin-top: 4%;
+}
+
+.book-container__item__info__tag-container__item {
+  background-color: dodgerblue;
+  padding: 4px 20px;
+  text-align: center;
+  margin: 4px 2px;
+  border-radius: 16px;
+}
+
+.book-container__item__info__description {
+  text-align: right;
+}
