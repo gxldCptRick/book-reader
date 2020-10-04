@@ -5,12 +5,13 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace BookReaderApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]s")]
     [ApiController]
     public class BookController : ControllerBase
     {
@@ -28,7 +29,7 @@ namespace BookReaderApi.Controllers
             {
                 AmountOfBooks = pageSize,
                 Page = page,
-                RootDir = rootdir,
+                RootDir =  Directory.GetCurrentDirectory() + rootdir,
             };
 
             return _bookService.FindBooksForRequest(request);

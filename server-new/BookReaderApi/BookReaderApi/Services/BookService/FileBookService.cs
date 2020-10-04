@@ -54,19 +54,34 @@ namespace BookReaderApi.Services.BookService
         }
         public BookSet FindBooksForRequest(BookRequest request)
         {
-            
-            var query = DiscoverBooksOnFileSystems(request.RootDir).Where(request.BookFilter.BookIsMatch);
-            var totalAmountOfBooks = query.Count();
-            var currentPage = request.Page - 1;
-            var lastPage = (int)Math.Ceiling(((double)totalAmountOfBooks) / request.AmountOfBooks);
-            var booksFound = query.Skip((currentPage) * request.AmountOfBooks).Take(request.AmountOfBooks).ToList();
+            List<Book> booksFound = new List<Book>();
+            var currentPage = request.Page;
+            int? nextPage = null;
+            int? previousPage = null;
+            int pageSize = request.AmountOfBooks;
+            int lastPage = 1;
+            if (Directory.Exists(request.RootDir))
+            {
+                var query = DiscoverBooksOnFileSystems(request.RootDir).Where(request.BookFilter.BookIsMatch);
+                var totalAmountOfBooks = query.Count();
+                currentPage = request.Page - 1;
+                booksFound = query.Skip((currentPage) * request.AmountOfBooks).Take(request.AmountOfBooks).ToList();
+                nextPage = lastPage == request.Page ? (int?)null : request.Page + 1;
+                previousPage = request.Page == 1 ? (int?)null : request.Page - 1;
+                lastPage = (int)Math.Ceiling(((double)totalAmountOfBooks) / request.AmountOfBooks);
+
+            }
+            else
+            {
+                throw new FileNotFoundException("Could not find rootdir", request.RootDir);
+            }
             return new BookSet
             {
                 BooksFound = booksFound,
                 CurrentPage = currentPage,
-                NextPage = lastPage == request.Page? (int?)null: request.Page + 1,
-                PreviousPage = request.Page == 1?(int?) null: request.Page - 1 ,
-                PageSize = request.AmountOfBooks,
+                NextPage = nextPage,
+                PreviousPage = previousPage,
+                PageSize = pageSize,
                 LastPage = lastPage
             };
         }
