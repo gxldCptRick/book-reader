@@ -15,7 +15,7 @@ namespace BookReaderApi.Controllers
     [ApiController]
     public class BookController : ControllerBase
     {
-        private const string rootdir = "/books";
+        internal const string rootdir = "/books";
         private readonly IBookService _bookService;
         public BookController(IBookService bookService)
         {
@@ -33,6 +33,11 @@ namespace BookReaderApi.Controllers
             };
 
             return _bookService.FindBooksForRequest(request);
+        }
+        [HttpGet("{id}")]
+        public Book GetById([FromRoute] Guid id)
+        {
+            return _bookService.GetBookById(id);
         }
     }
 }

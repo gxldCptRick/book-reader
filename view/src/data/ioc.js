@@ -1,7 +1,6 @@
 import LocalStorageManager from "./localStorageManager";
 import HttpManager from "./httpManager";
 import { DATA_PROVIDERS } from "./iocConstants";
-import Config from "../config.json";
 
 class InversionOfControlContainer {
   registerItem(key = "", value) {
@@ -18,6 +17,8 @@ class InversionOfControlContainer {
 }
 
 export const initializeIOC = () => {
+  const Config = require("../" +
+    (process.env.REACT_CONFIG_NAME || "config.json"));
   const container = new InversionOfControlContainer();
   container.registerItem(
     DATA_PROVIDERS.SESSION_MANAGER,

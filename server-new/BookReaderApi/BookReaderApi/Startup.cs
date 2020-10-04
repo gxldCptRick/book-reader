@@ -1,3 +1,4 @@
+using BookReaderApi.Services;
 using BookReaderApi.Services.BookService;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -28,6 +29,7 @@ namespace BookReaderApi
         {
             services.AddControllers();
             services.AddSingleton<IBookService>(new FileBookService());
+            services.AddSingleton<FileLoadingService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

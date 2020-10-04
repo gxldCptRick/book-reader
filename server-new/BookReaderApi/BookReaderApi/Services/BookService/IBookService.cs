@@ -9,5 +9,6 @@ namespace BookReaderApi.Services.BookService
     public interface IBookService
     {
         public BookSet FindBooksForRequest(BookRequest request);
+        Book GetBookById(Guid fileId);
     }
 }

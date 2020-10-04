@@ -33,13 +33,10 @@ namespace BookReaderApi.Services.BookService
             {
                 var title = Path.GetFileName(filePath);
                 var path = Path.GetRelativePath(rootDir, filePath);
-                if (_cachedBooks.ContainsKey((title, path)))
+                _cachedBooks.TryGetValue((title, path), out Book book);
+                if (book is null)
                 {
-                    yield return _cachedBooks[(title, path)];
-                }
-                else
-                {
-                    var book =  new Book
+                    book = new Book
                     {
                         Title = title,
                         Path = path,
@@ -47,9 +44,8 @@ namespace BookReaderApi.Services.BookService
                     };
                     _cachedBooks[(title, path)] = book;
                     _idIndex[book.Id] = book;
-                    yield return book;
                 }
-                
+                    yield return book;
             }
         }
         public BookSet FindBooksForRequest(BookRequest request)
@@ -64,8 +60,8 @@ namespace BookReaderApi.Services.BookService
             {
                 var query = DiscoverBooksOnFileSystems(request.RootDir).Where(request.BookFilter.BookIsMatch);
                 var totalAmountOfBooks = query.Count();
-                currentPage = request.Page - 1;
-                booksFound = query.Skip((currentPage) * request.AmountOfBooks).Take(request.AmountOfBooks).ToList();
+                currentPage = request.Page;
+                booksFound = query.Skip((currentPage - 1) * request.AmountOfBooks).Take(request.AmountOfBooks).ToList();
                 nextPage = lastPage == request.Page ? (int?)null : request.Page + 1;
                 previousPage = request.Page == 1 ? (int?)null : request.Page - 1;
                 lastPage = (int)Math.Ceiling(((double)totalAmountOfBooks) / request.AmountOfBooks);
@@ -78,12 +74,22 @@ namespace BookReaderApi.Services.BookService
             return new BookSet
             {
                 BooksFound = booksFound,
-                CurrentPage = currentPage,
-                NextPage = nextPage,
-                PreviousPage = previousPage,
-                PageSize = pageSize,
-                LastPage = lastPage
+                MetaInfo = new ResultInformation
+                {
+                    CurrentPage = currentPage,
+                    NextPage = nextPage,
+                    PreviousPage = previousPage,
+                    PageSize = pageSize,
+                    LastPage = lastPage,
+                    Count = booksFound.Count
+                }
             };
+        }
+
+        public Book GetBookById(Guid fileId)
+        {
+            _idIndex.TryGetValue(fileId, out Book value);
+            return value;
         }
     }
 }
